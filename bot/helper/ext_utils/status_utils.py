@@ -255,7 +255,7 @@ async def get_readable_message(
                 f"<b>\n#Reaper{index + start_position}: "
                 f"{escape(f"{task.name()}")}\n</b>"
                 if elapse <= config_dict["AUTO_DELETE_MESSAGE_DURATION"]
-                else f"\n<b>#Reaper{index + start_position}...(Processing)</b>"
+                else f"\n<b>#Reaper{index + start_position}...(Processing)</b>\n"
             )
         else:
             msg += (
@@ -274,7 +274,7 @@ async def get_readable_message(
                 else task.progress()
             )
             msg += (
-                f"\n{get_progress_bar_string(progress)} » <b>{tstatus} » {task.speed()}</b>"
+                f"{get_progress_bar_string(progress)} » <b>{tstatus} » {task.speed()}</b>"
                 f"\n<code>Done   :</code> {task.processed_bytes()} of {task.size()}"
                 f"\n<code>ETA    :</code> {task.eta()}"
                 f"\n<code>Past   :</code> {elapsed}"
