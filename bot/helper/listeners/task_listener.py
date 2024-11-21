@@ -441,12 +441,13 @@ class TaskListener(TaskConfig):
             await database.rm_complete_task(self.message.link) # type: ignore
         LOGGER.info(f"Task Done: {self.name}")
         lmsg = (
-            f"<b><i>{escape(self.name)}</i></b>"
+            f"<b>{escape(self.name)}</b>"
             f"\n<b>cc</b>: <i>{self.tag}</i>"
         )
-        gmsg = f"\n<b>Hey {self.tag}!\nYour job is done.</b>"
+        gmsg = f"\n<b>Hey {self.tag} Your job is done.</b>"
         msg = (
-            f"\n\n<code>Size  </code>: {get_readable_file_size(self.size)}"
+            f"\n\n<b>{escape(self.name)}</b>"
+            f"\n<code>Size  </code>: {get_readable_file_size(self.size)}"
             f"\n<code>Past  </code>: {get_readable_time(time() - self.time)}"
             f"\n<code>Mode  </code>: {self.mode}"
         )
@@ -460,7 +461,7 @@ class TaskListener(TaskConfig):
             msg += f"\n<code>Files </code>: {folders}\n"
             if mime_type != 0:
                 msg += f"<code>Error </code>: {mime_type}\n"
-            msg_ = "\n<b><i>Files has been sent in your DM.</b></i>"
+            msg_ = "\n<b>Files has been sent in your DM.</b>"
             if not self.dm_message:
                 if not files:
                     await send_message(
