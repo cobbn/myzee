@@ -456,7 +456,7 @@ class TaskListener(TaskConfig):
             if rclonePath == ""
             else f"\n\n<code>Path  </code>: {rclonePath}"
         )
-        msg_ = "\n\n<b><i>Link has been sent in your DM.</b></i>"
+        msg_ = "\n\n<b>Link has been sent in your DM.</b>"
         if self.is_leech:
             msg += f"\n<code>Files </code>: {folders}\n"
             if mime_type != 0:
