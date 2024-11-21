@@ -66,7 +66,7 @@ async def count_node(_, message):
             )
             return
         await delete_message(msg)
-        msg = f"<b>Name: </b><code>{name}</code>"
+        msg = f"<b>Name: {name}</b>"
         msg += f"\n\n<b>Size: </b>{get_readable_file_size(size)}"
         msg += f"\n\n<b>Type: </b>{mime_type}"
         if mime_type == "Folder":

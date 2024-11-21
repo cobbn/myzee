@@ -68,7 +68,7 @@ async def mirror_status(_, message):
     if count == 0:
         currentTime = get_readable_time(time() - bot_start_time) # type: ignore
         free = get_readable_file_size(disk_usage(config_dict["DOWNLOAD_DIR"]).free)
-        msg = "Stop it!\nGet some help!\n\nNo Active Tasks!\n\n"
+        msg = "<b>No Active Tasks!</b>\n"
         msg += f"Get your tasks status by adding me or user_id after cmd: /{BotCommands.StatusCommand[0]} me\n\n"
         msg += (
             f"\n<b>CPU:</b> {cpu_percent()}% | <b>FREE:</b> {free}"
@@ -259,8 +259,7 @@ def bot_sys_stats():
     bmsg += f"R: {ramp}% | "
     bmsg += f"S: {swap}% | "
     bmsg += f"D: {disk}%\n\n"
-    bmsg += f"Bandwidth Used: {traf}\n"
-    bmsg += f"{def_media(BASE.encode()).decode()}"
+    bmsg += f"Bandwidth Used: {traf}"
     return bmsg
 
 
@@ -297,7 +296,7 @@ async def stats(_, message, edit_mode=False):
     mem_p = memory.percent
     swap = swap_memory()
 
-    bot_stats = f"<b><i><u>Zee Bot Statistics</u></i></b>\n\n"\
+    bot_stats = f"<b>Reaper Bot Statistics</b>\n\n"\
                 f"<code>CPU  : </code>{get_progress_bar_string(cpuUsage)} {cpuUsage}%\n" \
                 f"<code>RAM  : </code>{get_progress_bar_string(mem_p)} {mem_p}%\n" \
                 f"<code>SWAP : </code>{get_progress_bar_string(swap.percent)} {swap.percent}%\n" \
@@ -308,7 +307,7 @@ async def stats(_, message, edit_mode=False):
                 f"<code>Downloaded      : </code> {recv}\n" \
                 f"<code>Total Bandwidth : </code> {tb}"
 
-    sys_stats = f"<b><i><u>Zee System Statistics</u></i></b>\n\n"\
+    sys_stats = f"<b>Reaper System Statistics</b>\n\n"\
                 f"<b>System Uptime:</b> <code>{sysTime}</code>\n" \
                 f"<b>CPU:</b> {get_progress_bar_string(cpuUsage)}<code> {cpuUsage}%</code>\n" \
                 f"<b>CPU Total Core(s):</b> <code>{cpu_count(logical=True)}</code>\n" \
@@ -493,13 +492,13 @@ async def send_repo_stats(_, query):
             if version != vtag:
                 update_info =  f"⚠️ New Version Update Available ⚠️"
 
-    repo_stats = f"<b><i><u>Zee Repository Info</u></i></b> \n\n" \
-                 f"<b><i>Official Repository</i></b>        \n"   \
+    repo_stats = f"<b>Reaper Repository Info</b> \n\n" \
+                 f"<b>Official Repository</b>        \n"   \
                  f"<code>- Updated   : </code> {commit_date}\n"   \
                  f"<code>- Version   : </code> {vtag}       \n"   \
                  f"<code>- Changelog : </code> {c_log}      \n"   \
                  f"<code>- Desc      : </code> {d_log}      \n\n" \
-                 f"<b><i>Bot Repository</i></b>             \n"   \
+                 f"<b>Bot Repository</b>             \n"   \
                  f"<code>- Updated   : </code> {last_commit}\n"   \
                  f"<code>- Version   : </code> {version}    \n"   \
                  f"<code>- Changelog : </code> {change_log} \n\n" \
@@ -544,7 +543,7 @@ async def send_bot_limits(_, query):
     UMT = "Unlimited" if config_dict["USER_MAX_TASKS"] == "" else config_dict["USER_MAX_TASKS"]
     BMT = "Unlimited" if config_dict["QUEUE_ALL"] == "" else config_dict["QUEUE_ALL"]
 
-    bot_limit = f"<b><i><u>Zee Bot Limitations</u></i></b>\n" \
+    bot_limit = f"<b>Reaper Bot Limitations</b>\n" \
                 f"<code>Torrent   : {TOR}</code> <b>GB</b>\n" \
                 f"<code>G-Drive   : {GDL}</code> <b>GB</b>\n" \
                 f"<code>Yt-Dlp    : {YTD}</code> <b>GB</b>\n" \

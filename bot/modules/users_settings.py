@@ -373,9 +373,9 @@ async def get_user_settings(from_user):
     )
 
     text = f"""
-<u>Settings for {name}</u>
+<b>Settings for {name}</b>
 
-<code>TG Premium Status:</code> <b>{IS_PREMIUM_USER}</b>
+<b>TG Premium Status:</b> <b>{IS_PREMIUM_USER}</b>
 
 <code>Leech Type       :</code> <b>{ltype}</b>
 <code>Leech Prefix     :</code> <b>{lprefix}</b>
@@ -424,7 +424,7 @@ async def update_user_settings(query):
     media = (
         f"Thumbnails/{user_id}.jpg"
         if os_path.exists(f"Thumbnails/{user_id}.jpg")
-        else f"{def_media(JAVA.encode()).decode()}"
+        else f"https://graph.org/Reaper-07-29"
     )
     await query.message.edit_media(
         media=InputMediaPhoto(
@@ -452,7 +452,7 @@ async def user_settings(client, message):
     media = (
         f"Thumbnails/{user_id}.jpg"
         if os_path.exists(f"Thumbnails/{user_id}.jpg")
-        else f"{def_media(JAVA.encode()).decode()}"
+        else f"https://graph.org/Reaper-07-29"
     )
     usetMsg = await message.reply_photo(
         media,
