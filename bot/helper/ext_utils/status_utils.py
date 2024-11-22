@@ -293,7 +293,7 @@ async def get_readable_message(
                 "seeders_num"
             ):
                 try:
-                    msg += f" <b>| {task.seeders_num()}/{task.leechers_num()}</b>"
+                    msg += f" | {task.seeders_num()}/{task.leechers_num()}"
                 except:
                     pass
         elif tstatus == MirrorStatus.STATUS_SEEDING:
