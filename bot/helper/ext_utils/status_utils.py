@@ -336,19 +336,19 @@ async def get_readable_message(
         )
     if not is_user:
         buttons.data_button(
-            "ᴛᴀsᴋs\nɪɴғᴏ",
+            "📋",
             f"status {sid} ov",
             position="footer"
         )
         buttons.data_button(
-            "sʏsᴛᴇᴍ\nɪɴғᴏ",
+            "♻️",
             f"status {sid} stats",
             position="footer"
         )
     if len(tasks) > STATUS_LIMIT:
         msg += f"<b>Tasks:</b> {tasks_no} | <b>Step:</b> {page_step}\n"
         buttons.data_button(
-            "⫷",
+            "«",
             f"status {sid} pre",
             position="header"
         )
@@ -358,7 +358,7 @@ async def get_readable_message(
             position="header"
         )
         buttons.data_button(
-            "⫸",
+            " »",
             f"status {sid} nex",
             position="header"
         )
