@@ -254,7 +254,7 @@ async def get_readable_message(
             msg += (
                 f"<b>#Reaper{index + start_position}: {escape(f"{task.name()}")}\n</b>"
                 if elapse <= config_dict["AUTO_DELETE_MESSAGE_DURATION"]
-                else f"\n<b>#Reaper{index + start_position}...:(Processing)</b>\n"
+                else f"\n<b><blockquote>#Reaper{index + start_position}...(Processing)</b></blockquote></b>\n"
             )
         else:
             msg += (
@@ -293,7 +293,7 @@ async def get_readable_message(
                 "seeders_num"
             ):
                 try:
-                    msg += f"\n<code>S/L    :</code> {task.seeders_num()}/{task.leechers_num()}"
+                    msg += f" <b>| {task.seeders_num()}/{task.leechers_num()}</b>"
                 except:
                     pass
         elif tstatus == MirrorStatus.STATUS_SEEDING:
