@@ -252,13 +252,13 @@ async def get_readable_message(
             and int(config_dict["AUTO_DELETE_MESSAGE_DURATION"]) > 0
         ):
             msg += (
-                f"<b>{escape(f"{task.name()}")}\n</b>"
+                f"<b>{tstatus} {escape(f"{task.name()}")}\n</b>"
                 if elapse <= config_dict["AUTO_DELETE_MESSAGE_DURATION"]
-                else f"\n<b>#Reaper{index + start_position}...(Processing)</b>\n"
+                else f"\n<b>(Processing)</b>\n"
             )
         else:
             msg += (
-                f"<b>{escape(f"{task.name()}")}\n</b>"
+                f"<b>{tstatus} {escape(f"{task.name()}")}\n</b>"
             )
         if tstatus not in [
             MirrorStatus.STATUS_SEEDING,
@@ -272,7 +272,7 @@ async def get_readable_message(
                 else task.progress()
             )
             msg += (
-                f"\n<b>{get_progress_bar_string(progress)} | {tstatus}| {task.speed()}</b>"
+                f"<b>{get_progress_bar_string(progress)} | {task.speed()}</b>"
                 f"\n<code>Done   :</code> {task.processed_bytes()} of {task.size()}"
                 f"\n<code>ETA    :</code> {task.eta()}"
                 f"\n<code>Past   :</code> {elapsed}"
@@ -388,7 +388,7 @@ async def get_readable_message(
                 )
     button = buttons.build_menu(8)
     msg += (
-        f"\n<b>CPU</b>: {cpu_percent()}% | <b>FREE</b>: {get_readable_file_size(disk_usage(DOWNLOAD_DIR).free)} | <b>UPTM</b>: {get_readable_time(time() - bot_start_time)}"
+        f"<b>CPU</b>: {cpu_percent()}% | <b>FREE</b>: {get_readable_file_size(disk_usage(DOWNLOAD_DIR).free)} | <b>UPTM</b>: {get_readable_time(time() - bot_start_time)}"
     )
     remaining_time = 86400 - (time() - bot_start_time)
     if remaining_time < 3600:
