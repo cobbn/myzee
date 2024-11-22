@@ -252,15 +252,13 @@ async def get_readable_message(
             and int(config_dict["AUTO_DELETE_MESSAGE_DURATION"]) > 0
         ):
             msg += (
-                f"<b>\n#Reaper{index + start_position}: "
-                f"{escape(f"{task.name()}")}\n</b>"
+                f"<b>{escape(f"{task.name()}")}\n</b>"
                 if elapse <= config_dict["AUTO_DELETE_MESSAGE_DURATION"]
                 else f"\n<b>#Reaper{index + start_position}...(Processing)</b>\n"
             )
         else:
             msg += (
-                f"<b>\n#Reaper{index + start_position}: "
-                f"{escape(f"{task.name()}")}\n</b>"
+                f"<b>{escape(f"{task.name()}")}\n</b>"
             )
         if tstatus not in [
             MirrorStatus.STATUS_SEEDING,
