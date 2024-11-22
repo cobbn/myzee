@@ -389,7 +389,7 @@ async def get_readable_message(
                 )
     button = buttons.build_menu(8)
     msg += (
-        f"<b>CPU</b>: {cpu_percent()}% | <b>FREE</b>: {get_readable_file_size(disk_usage(DOWNLOAD_DIR).free)} | <b>UPTM</b>: {get_readable_time(time() - bot_start_time)}"
+        f"\n<b>CPU</b>: {cpu_percent()}% | <b>FREE</b>: {get_readable_file_size(disk_usage(DOWNLOAD_DIR).free)} | <b>UPTM</b>: {get_readable_time(time() - bot_start_time)}"
     )
     remaining_time = 86400 - (time() - bot_start_time)
     if remaining_time < 3600:
