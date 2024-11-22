@@ -447,7 +447,7 @@ class TaskListener(TaskConfig):
         gmsg = f"\n<b>Hey {self.tag} Your job is done.</b>"
         msg = (
             f"\n\n<b>{escape(self.name)}</b>"
-            f"\n<code>Size  </code>: {get_readable_file_size(self.size)}"
+            f"\n\n<code>Size  </code>: {get_readable_file_size(self.size)}"
             f"\n<code>Past  </code>: {get_readable_time(time() - self.time)}"
             f"\n<code>Mode  </code>: {self.mode}"
         )
