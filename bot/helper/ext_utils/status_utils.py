@@ -241,9 +241,9 @@ async def get_readable_message(
             else get_readable_time(elapse)
         )
         user_tag = task.listener.tag.replace("@", "").replace("_", " ")
-        cancel_task = f"<b>/{BotCommands.CancelTaskCommand}_{task.gid()[:8]}</b>"
+        cancel_task = f"<b>/{BotCommands.CancelTaskCommand[1]}_{task.gid()}</b>"
         '''cancel_task = (
-            f"<code>/{BotCommands.CancelTaskCommand[1]} {task.gid()}</code>"
+            f"<b>/{BotCommands.CancelTaskCommand[1]} {task.gid()}</b>"
             if not task.listener.get_chat.has_protected_content
             else f"<b>/{BotCommands.CancelTaskCommand[1]}_{task.gid()}</b>"
         )'''
