@@ -31,7 +31,7 @@ class _BotCommands:
         self.CloneCommand = f"clone{CMD_SUFFIX}"
         self.CountCommand = f"count{CMD_SUFFIX}"
         self.DeleteCommand = f"del{CMD_SUFFIX}"
-         self.CancelTaskCommand = [
+        self.CancelTaskCommand = [
             f"abort{CMD_SUFFIX}",
             f"A{CMD_SUFFIX}",
         ]
