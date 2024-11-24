@@ -241,11 +241,12 @@ async def get_readable_message(
             else get_readable_time(elapse)
         )
         user_tag = task.listener.tag.replace("@", "").replace("_", " ")
-        cancel_task = (
+        cancel_task = f"<b>/{BotCommands.CancelTaskCommand}_{task.gid()[:8]}</b>"
+        '''cancel_task = (
             f"<code>/{BotCommands.CancelTaskCommand[1]} {task.gid()}</code>"
             if not task.listener.get_chat.has_protected_content
             else f"<b>/{BotCommands.CancelTaskCommand[1]}_{task.gid()}</b>"
-        )
+        )'''
 
         if (
             config_dict["DELETE_LINKS"]
@@ -314,7 +315,7 @@ async def get_readable_message(
                 f"\n<code>UserID :</code> ||{task.listener.user_id}||"
                 f"\n<code>Engine :</code> {task.engine}"
             )
-        msg += f"\n⚠️ {cancel_task}\n\n"
+        msg += f"\n⚠️{cancel_task}\n\n"
 
     if len(msg) == 0:
         if status == "All":
