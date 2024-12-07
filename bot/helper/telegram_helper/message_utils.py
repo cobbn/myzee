@@ -462,7 +462,7 @@ async def send_log_message(message, link, tag):
             if not reply_to.text:
                 caption = ""
                 if isSuperGroup and not config_dict["DELETE_LINKS"]:
-                    caption+=f"<b><a href='{message.link}'>Source</a></b> | "
+                    caption+=f""
                 caption+=f"<b>Added by</b>: {tag}\n<b>User ID</b>: <code>{message.from_user.id}</code>"
                 return await reply_to.copy(
                     log_chat,
@@ -470,8 +470,8 @@ async def send_log_message(message, link, tag):
                 )
         msg = ""
         if isSuperGroup and not config_dict["DELETE_LINKS"]:
-            msg+=f"\n\n<b><a href='{message.link}'>Source Link</a></b>: "
-        msg += f"<code>{link}</code>\n\n<b>Added by</b>: {tag}\n"
+            msg+=f""
+        msg += f"\n<b>Added by</b>: {tag}\n"
         msg += f"<b>User ID</b>: <code>{message.from_user.id}</code>"
         return await message._client.send_message(
             log_chat,
