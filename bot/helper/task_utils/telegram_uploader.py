@@ -182,24 +182,17 @@ class TelegramUploader:
         return True
 
     async def _prepare_file(self, file_, dirpath, delete_file):
+        cap_mono = f"{file_}"
+        # Sanitize prefix/suffix for filesystem use (keep original for captions)
         if self._lprefix or self._lsuffix:
-            if self._lprefix:
-                cap_mono = f"{self._lprefix} {file_}"
-                self._lprefix = re_sub(
-                    "<.*?>",
-                    "",
-                    self._lprefix
-                )
-            else:
-                cap_mono = f"{file_}"
+            # Strip HTML tags then remove illegal filename characters and control chars
+            safe_prefix = re_sub(r'[\\/:*?"<>|\r\n\t]+', ' ', re_sub(r'<[^>]+>', '', self._lprefix)).strip() if self._lprefix else ""
+            safe_suffix = re_sub(r'[\\/:*?"<>|\r\n\t]+', ' ', re_sub(r'<[^>]+>', '', self._lsuffix)).strip() if self._lsuffix else ""
+            # Collapse whitespace and limit overly long components
+            safe_prefix = re_sub(r'\s+', ' ', safe_prefix)[:50].strip() if safe_prefix else ""
+            safe_suffix = re_sub(r'\s+', ' ', safe_suffix)[:50].strip() if safe_suffix else ""
+            new_name = " ".join([p for p in [safe_prefix, file_, safe_suffix] if p]).strip()
 
-            if self._lsuffix:
-                cap_mono = f"{cap_mono} {self._lsuffix}"
-                self._lsuffix = re_sub(
-                    "<.*?>",
-                    "",
-                    self._lsuffix
-                )
             if (
                 self._listener.seed
                 and not self._listener.new_dir
@@ -213,7 +206,7 @@ class TelegramUploader:
                 )
                 new_path = ospath.join(
                     dirpath,
-                    f"{self._lprefix} {file_} {self._lsuffix}"
+                    new_name
                 )
                 self._up_path = await copy(
                     self._up_path,
@@ -222,37 +215,38 @@ class TelegramUploader:
             else:
                 new_path = ospath.join(
                     dirpath,
-                    f"{self._lprefix} {file_} {self._lsuffix}"
+                    new_name
                 )
                 await rename(
                     self._up_path,
                     new_path
                 )
                 self._up_path = new_path
-        else:
-            cap_mono = f"{file_}"
+        # Do not add prefix/suffix to cap_mono here; do it after template is applied
 
-        if len(file_) > 60:
-            if is_archive(file_):
-                name = get_base_name(file_)
-                ext = file_.split(
+        # Truncate long filenames using the current filename on disk (after any prefix/suffix rename)
+        cur_file = ospath.basename(self._up_path)
+        if len(cur_file) > 60:
+            if is_archive(cur_file):
+                name = get_base_name(cur_file)
+                ext = cur_file.split(
                     name,
                     1
                 )[1]
             elif match := re_match(
                 r".+(?=\..+\.0*\d+$)|.+(?=\.part\d+\..+$)",
-                file_
+                cur_file
             ):
                 name = match.group(0)
-                ext = file_.split(
+                ext = cur_file.split(
                     name,
                     1
                 )[1]
-            elif len(fsplit := ospath.splitext(file_)) > 1:
+            elif len(fsplit := ospath.splitext(cur_file)) > 1:
                 name = fsplit[0]
                 ext = fsplit[1]
             else:
-                name = file_
+                name = cur_file
                 ext = ""
             extn = len(ext)
             remain = 60 - extn
@@ -308,15 +302,13 @@ class TelegramUploader:
         style = self._lcapfont.lower()
         if style in font_styles:
             tags = font_styles[style]
-            if tags in [
-                "bi",
-                "bu",
-                "iu",
-                "biu"
-            ]:
-                cap_mono = f"<{tags[0]}><{tags[1]}>{cap_mono}</{tags[1]}></{tags[0]}>"
+            if tags == "code":
+                cap_mono = f"<code>{cap_mono}</code>"
             else:
-                cap_mono = f"<{tags}>{cap_mono}</{tags}>"
+                tag_seq = list(tags)
+                open_tags = "".join(f"<{t}>" for t in tag_seq)
+                close_tags = "".join(f"</{t}>" for t in reversed(tag_seq))
+                cap_mono = f"{open_tags}{cap_mono}{close_tags}"
         return cap_mono
 
     def _get_input_media(self, subkey, key, msg_list=None):
