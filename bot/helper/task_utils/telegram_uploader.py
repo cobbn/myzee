@@ -311,6 +311,21 @@ class TelegramUploader:
                 cap_mono = f"{open_tags}{cap_mono}{close_tags}"
         return cap_mono
 
+    def _apply_caption_affixes(self, caption: str) -> str:
+        """
+        Compose final caption by adding user/configured prefix and suffix around the base
+        caption (which may already contain font styling). Prefix/suffix are used as-is,
+        allowing HTML the user provided. Spaces are normalized and empty parts skipped.
+        """
+        prefix = (self._lprefix or "").strip()
+        suffix = (self._lsuffix or "").strip()
+        if prefix or suffix:
+            parts = [p for p in (prefix, caption, suffix) if p]
+            # Telegram caption hard limit is 1024 chars; trim defensively
+            final = " ".join(parts)
+            return final[:1024]
+        return caption
+
     def _get_input_media(self, subkey, key, msg_list=None):
         rlist = []
         msgs = []
@@ -495,6 +510,8 @@ class TelegramUploader:
                         delete_file
                     )
                     cap_mono = await self._prepare_caption_font(cap_mono)
+                    # Apply original prefix/suffix to caption after font/template processing
+                    cap_mono = self._apply_caption_affixes(cap_mono)
                     if self._last_msg_in_group:
                         group_lists = [
                             x for v in self._media_dict.values() for x in v.keys()
